@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E7BFF8FD193D45A800BAC255"
-               BuildableName = "obligatorio2"
-               BlueprintName = "obligatorio2"
-               ReferencedContainer = "container:obligatorio2.xcodeproj">
+               BuildableName = "minishell"
+               BlueprintName = "minishell"
+               ReferencedContainer = "container:minishell.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E7BFF8FD193D45A800BAC255"
-            BuildableName = "obligatorio2"
-            BlueprintName = "obligatorio2"
-            ReferencedContainer = "container:obligatorio2.xcodeproj">
+            BuildableName = "minishell"
+            BlueprintName = "minishell"
+            ReferencedContainer = "container:minishell.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -52,9 +52,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E7BFF8FD193D45A800BAC255"
-            BuildableName = "obligatorio2"
-            BlueprintName = "obligatorio2"
-            ReferencedContainer = "container:obligatorio2.xcodeproj">
+            BuildableName = "minishell"
+            BlueprintName = "minishell"
+            ReferencedContainer = "container:minishell.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -70,9 +70,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E7BFF8FD193D45A800BAC255"
-            BuildableName = "obligatorio2"
-            BlueprintName = "obligatorio2"
-            ReferencedContainer = "container:obligatorio2.xcodeproj">
+            BuildableName = "minishell"
+            BlueprintName = "minishell"
+            ReferencedContainer = "container:minishell.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

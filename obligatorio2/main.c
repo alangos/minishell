@@ -60,6 +60,11 @@ void eval_command(char command[W_SIZE/2][W_SIZE], int argc){
         return;
     }
     
+    if (strcmp(command[0], "copiar") == 0) {
+        command_copy(argc, command);
+        return;
+    }
+    
     command_extern(argc, command);
 }
 

@@ -143,3 +143,62 @@ void command_cat(int argc, char *argv){
     printf("\n");
     fclose(fp);
 }
+
+
+int command_copy(int argc, char args[512/2][512]){
+    char ch;
+    
+    if (argc != 3) {
+        printf("Error: missing or too many parameters\n");
+        
+        return 1;
+    }
+    
+    FILE* source = fopen(args[1], "r");
+    
+    if( source == NULL )
+        
+    {
+        
+        printf("Error: Source file %s does not exist\n",args[1]);
+        
+        return 1;
+        
+    }
+    
+    FILE* target;
+    target = fopen(args[2], "r");
+
+
+    if( target != NULL )
+        
+    {
+        
+        fclose(source);
+        
+        printf("Error: File %s already exists\n", args[2]);
+        
+        return 1;
+        
+    }else{
+        target = fopen(args[2], "ab+");
+    }
+    
+    
+    while( ( ch = fgetc(source) ) != EOF )
+        
+        fputc(ch, target);
+    
+    
+    printf("File copied successfully.\n");
+    
+    
+    fclose(source);
+    
+    fclose(target);
+    
+    
+    
+    return 0;
+    
+}

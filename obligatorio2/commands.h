@@ -20,3 +20,4 @@ void command_getenv(char* args);
 void command_echo(int argc, char args[512/2][512]);
 void command_dir(int argc, char args[512/2][512]);
 void command_extern(int argc, char args[512/2][512]);
+void command_cat(int argc, char *argv);

@@ -55,6 +55,11 @@ void eval_command(char command[W_SIZE/2][W_SIZE], int argc){
         return;
     }
     
+    if (strcmp(command[0], "ver") == 0) {
+        command_cat(argc, command[1]);
+        return;
+    }
+    
     command_extern(argc, command);
 }
 

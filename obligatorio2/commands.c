@@ -12,6 +12,7 @@
 #include <strings.h>
 #include <sys/types.h>
 #include <dirent.h>
+#include <pwd.h>
 
 char previous_dir[512];
 char tmp[512];
@@ -59,6 +60,9 @@ void command_pid(){
 
 void command_uid(){
     printf("User ID : %d\n", getuid());
+    struct passwd *pwd = getpwuid(getuid());
+    printf("Username : %s\n", pwd->pw_name);
+    
 }
 
 void command_getenv(char* args){
@@ -119,4 +123,23 @@ void command_extern(int argc, char args[512/2][512]){
     }
     system(command);
     
+}
+
+void command_cat(int argc, char *argv){
+    FILE* fp;
+    char c;
+    if (argc == 1){
+        printf("Error al usar ver, faltan argumentos.\n");
+        return;
+    }
+    fp = fopen(argv, "r");
+    if ( fp == NULL ){
+        printf("Error al abrir el archivo.\n");
+        return;
+    }
+    while ( (c = getc(fp)) != EOF ) {
+        putchar(c);
+    }
+    printf("\n");
+    fclose(fp);
 }

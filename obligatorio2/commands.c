@@ -10,23 +10,37 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <strings.h>
+#include <sys/types.h>
+#include <dirent.h>
 
 char previous_dir[512];
 char tmp[512];
 
-void command_cd(char* args){
-    if (strcmp(args,"\0") == 0)  // no args
+void command_cd(int argc, char args[512/2][512]){
+    if (argc == 1)  // no args
     {
         char* home = getenv("HOME");
-        chdir(home ? home : ".");   // in case HOME is not defined  :-)
+        strcpy(tmp, previous_dir);
+        getcwd(previous_dir, sizeof(previous_dir));
+        if (!chdir(home ? home : ".") == -1) {
+            strcpy(previous_dir, tmp);
+        }
+        // in case HOME is not defined  :-)
     }
     else // arg given (could it be a path?)
     {
-        if (strcmp(args,"-") == 0) {
-            printf("bien");
+        if (strcmp(args[1],"-") == 0) {
+            
+            if (chdir(previous_dir) == -1){
+                printf("cd: no previous dir\n");
+            }
         }else{
-            if (chdir(args) == -1){
-                printf("cd: %s: No such file or directory\n",args);
+            strcpy(tmp, previous_dir);
+            getcwd(previous_dir, sizeof(previous_dir));
+            if (chdir(args[1]) == -1){
+                strcpy(previous_dir, tmp);
+                
+                printf("cd: %s: No such file or directory\n",args[1]);
                 //printf("%s",getenv("HOME"));
         
             }
@@ -51,6 +65,58 @@ void command_getenv(char* args){
     printf("%s=%s\n",args, getenv(args));
 }
 
-void command_echo(char* args){
-    printf("%s\n",args);
+void command_echo(int argc, char args[512/2][512]){
+    for (int i=1; i<argc; i++) {
+        printf("%s ",args[i]);
+    }
+    
+    printf("\n");
+}
+
+void command_dir(int argc, char args[512/2][512]){
+    if (argc == 1) {
+        DIR *dp;
+        struct dirent *ep;
+        
+        dp = opendir ("./");
+        if (dp != NULL)
+        {
+            while ((ep = readdir (dp)))
+                puts (ep->d_name);
+            (void) closedir (dp);
+        }
+        else
+            perror ("Error al abrir el directorio");
+        
+    }else{
+        DIR *dp;
+        struct dirent *ep;
+        
+        dp = opendir ("./");
+        if (dp != NULL)
+        {
+            while ((ep = readdir (dp))){
+                if (strstr(ep->d_name, args[1]) != NULL) {
+                    puts (ep->d_name);
+                }
+            }
+            
+            (void) closedir (dp);
+        }
+        else
+            perror ("Error al abrir el directorio");
+    }
+    
+}
+
+void command_extern(int argc, char args[512/2][512]){
+    char command[512];
+    for (int i=0; i<512; i++) {
+        command[i] = '\0';
+    }
+    for (int i = 0; i<argc; i++) {
+        sprintf(command, "%s %s", command, args[i]);
+    }
+    system(command);
+    
 }

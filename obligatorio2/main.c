@@ -21,7 +21,7 @@ int separaPorEspacios(char *s, char out[W_SIZE/2][W_SIZE]);
 
 void eval_command(char command[W_SIZE/2][W_SIZE], int argc){
     if (strcmp(command[0], "cd") == 0) {
-        command_cd(command[1]);
+        command_cd(argc,command);
         return;
     }
     
@@ -46,9 +46,16 @@ void eval_command(char command[W_SIZE/2][W_SIZE], int argc){
     }
     
     if (strcmp(command[0], "echo") == 0) {
-        command_echo(command[1]);
+        command_echo(argc, command);
         return;
     }
+    
+    if (strcmp(command[0], "dir") == 0) {
+        command_dir(argc, command);
+        return;
+    }
+    
+    command_extern(argc, command);
 }
 
 void printPrompt(){

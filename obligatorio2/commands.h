@@ -12,9 +12,11 @@
 
 
 #endif
-void command_cd(char* args);
+void command_cd(int argc, char args[512/2][512]);
 void command_exit(char* args);
 void command_pid();
 void command_uid();
 void command_getenv(char* args);
-void command_echo(char* args);
+void command_echo(int argc, char args[512/2][512]);
+void command_dir(int argc, char args[512/2][512]);
+void command_extern(int argc, char args[512/2][512]);

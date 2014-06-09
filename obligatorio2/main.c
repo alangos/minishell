@@ -73,7 +73,8 @@ void eval_command(char command[W_SIZE/2][W_SIZE], int argc){
 }
 
 int checkVariables(char command[W_SIZE/2][W_SIZE], int argc){
-    for (int i=1; i<argc; i++) {
+    int i;
+    for (i=1; i<argc; i++) {
         char* c = command[i];
         
         if (*c == '$') {
@@ -102,7 +103,7 @@ int main(int argc, const char * argv[])
 {
 
     // insert code here...
-    
+    int i,j;
     char str[W_SIZE];
     char pval[W_SIZE/2][W_SIZE];
     while (1) {
@@ -121,11 +122,11 @@ int main(int argc, const char * argv[])
             
         }
         
-        for (int i=0; i<W_SIZE; i++) {
+        for (i=0; i<W_SIZE; i++) {
             str[i] = '\0';
         }
-        for (int i=0; i<W_SIZE/2; i++) {
-            for (int j=0; j<W_SIZE; j++) {
+        for (i=0; i<W_SIZE/2; i++) {
+            for (j=0; j<W_SIZE; j++) {
                 pval[i][j] = '\0';
                 
             }

@@ -71,7 +71,8 @@ void command_getenv(char* args){
 }
 
 void command_echo(int argc, char args[W_SIZE/2][W_SIZE]){
-    for (int i=1; i<argc; i++) {
+    int i;
+    for (i=1; i<argc; i++) {
         printf("%s ",args[i]);
     }
     
@@ -116,10 +117,11 @@ void command_dir(int argc, char args[W_SIZE/2][W_SIZE]){
 
 void command_extern(int argc, char args[W_SIZE/2][W_SIZE]){
     char command[W_SIZE];
-    for (int i=0; i<W_SIZE; i++) {
+    int i;
+    for (i=0; i<W_SIZE; i++) {
         command[i] = '\0';
     }
-    for (int i = 0; i<argc; i++) {
+    for (i = 0; i<argc; i++) {
         sprintf(command, "%s %s", command, args[i]);
     }
     system(command);

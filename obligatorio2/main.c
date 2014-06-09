@@ -14,7 +14,6 @@
 #include <errno.h>
 #include "commands.h"
 
-#define W_SIZE 512
 #define CommandNumber 6
 
 int separaPorEspacios(char *s, char out[W_SIZE/2][W_SIZE]);
@@ -65,13 +64,36 @@ void eval_command(char command[W_SIZE/2][W_SIZE], int argc){
         return;
     }
     
+    if (strcmp(command[0], "setenv") == 0) {
+        command_setenv(argc, command);
+        return;
+    }
+    
     command_extern(argc, command);
+}
+
+int checkVariables(char command[W_SIZE/2][W_SIZE], int argc){
+    for (int i=1; i<argc; i++) {
+        char* c = command[i];
+        
+        if (*c == '$') {
+            char* var = getenv(++c);
+            
+            if (var == NULL) {
+                printf("Variable %s does not exist\n", command[i]);
+                return 1;
+            }else{
+                strcpy(command[i], var);
+            }
+        }
+    }
+    return 0;
 }
 
 void printPrompt(){
     char cwd[1024];
     if (getcwd(cwd, sizeof(cwd)) != NULL)
-        fprintf(stdout, "%s > ", cwd);
+        fprintf(stdout, "minishell %s > ", cwd);
     else
         perror("getcwd() error");
 }
@@ -90,8 +112,10 @@ int main(int argc, const char * argv[])
             int words_count = separaPorEspacios(str, pval);
             
             
+            if (checkVariables(pval, words_count) == 0) {
+                eval_command(pval,words_count);
+            }
             //eval command here
-            eval_command(pval,words_count);
 
             
             
@@ -115,6 +139,9 @@ int main(int argc, const char * argv[])
     
     return 0;
 }
+
+
+
 
 int separaPorEspacios(char *s, char out[W_SIZE/2][W_SIZE])
 {

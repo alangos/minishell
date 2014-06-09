@@ -13,11 +13,12 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <pwd.h>
+#include "commands.h"
 
-char previous_dir[512];
-char tmp[512];
+char previous_dir[W_SIZE];
+char tmp[W_SIZE];
 
-void command_cd(int argc, char args[512/2][512]){
+void command_cd(int argc, char args[W_SIZE/2][W_SIZE]){
     if (argc == 1)  // no args
     {
         char* home = getenv("HOME");
@@ -69,7 +70,7 @@ void command_getenv(char* args){
     printf("%s=%s\n",args, getenv(args));
 }
 
-void command_echo(int argc, char args[512/2][512]){
+void command_echo(int argc, char args[W_SIZE/2][W_SIZE]){
     for (int i=1; i<argc; i++) {
         printf("%s ",args[i]);
     }
@@ -77,7 +78,7 @@ void command_echo(int argc, char args[512/2][512]){
     printf("\n");
 }
 
-void command_dir(int argc, char args[512/2][512]){
+void command_dir(int argc, char args[W_SIZE/2][W_SIZE]){
     if (argc == 1) {
         DIR *dp;
         struct dirent *ep;
@@ -113,9 +114,9 @@ void command_dir(int argc, char args[512/2][512]){
     
 }
 
-void command_extern(int argc, char args[512/2][512]){
-    char command[512];
-    for (int i=0; i<512; i++) {
+void command_extern(int argc, char args[W_SIZE/2][W_SIZE]){
+    char command[W_SIZE];
+    for (int i=0; i<W_SIZE; i++) {
         command[i] = '\0';
     }
     for (int i = 0; i<argc; i++) {
@@ -144,8 +145,35 @@ void command_cat(int argc, char *argv){
     fclose(fp);
 }
 
+void command_setenv (int argc, char args[W_SIZE/2][W_SIZE])
 
-int command_copy(int argc, char args[512/2][512]){
+{
+    if (argc != 3) {
+        printf("Error: missing or too many parameters\n");
+        
+        return;
+    }
+    
+    char*name = args[1];
+    char*value = args [2];
+    
+    if (! value) {
+        
+        printf ("'%s' is not set.\n", name);
+        
+    }
+    
+    else {
+        
+        setenv(name,value,1); //If the environment already contains an entry with key name the replace parameter controls the action. If replace is zero, nothing happens. Otherwise the old entry is replaced by the new one.
+        
+        printf ("%s = %s\n", name, value);
+        
+    }
+    
+}
+
+int command_copy(int argc, char args[W_SIZE/2][W_SIZE]){
     char ch;
     
     if (argc != 3) {
